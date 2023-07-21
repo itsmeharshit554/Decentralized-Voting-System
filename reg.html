@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Page</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="public/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="reggie">
+    <div>
+      <a class="blog-header-logo text-body-emphasis text-decoration-none ti reee" href="#">BlocVote</a>
+    </div>
+    <div>
+      <h1 class="vote">Vote Now</h1>
+    </div>
+    <form id="registrationForm" action="/reg">
+      <div>
+        <button class="btn btn-dark px-3 connect" onclick="connect()">Connect Wallet / Continue</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+
+  <script>
+    function connect() {
+      if (window.ethereum) {
+        ethereum.request({ method: 'eth_requestAccounts' })
+          .then(handleAccountsChanged)
+          .catch((error) => {
+            if (error.code === 4001) {
+              console.log('Please connect to MetaMask.');
+            } else {
+              console.error('Error requesting accounts:', error);
+            }
+          });
+      } else {
+        console.log('MetaMask not found. Please install MetaMask.');
+      }
+    }
+
+    function handleAccountsChanged(accounts) {
+      if (accounts.length === 0) {
+        console.log('No account found. Please connect to MetaMask.');
+      } else {
+        var address = accounts[0];
+        localStorage.setItem('address', address);
+        console.log('Metamask address:', address);
+
+        // Redirect to the next page
+        window.location.href = 'http://localhost:2000/main';
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+</body>
+</html>
